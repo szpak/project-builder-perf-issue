@@ -3,5 +3,5 @@ language: groovy
 jdk:
   - oraclejdk8
 
-install: ./gradlew assemble --stacktrace --info
+install: true
 script: ./gradlew check --stacktrace --info --continue -Dscan

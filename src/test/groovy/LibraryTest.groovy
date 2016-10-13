@@ -4,6 +4,8 @@
  *
  * @author szpak, @date 8/17/16 11:16 AM
  */
+
+import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import spock.lang.Specification
 
@@ -15,7 +17,9 @@ class LibraryTest extends Specification{
     def "should reproduce performance regression in Gradle 2.14"() {
         expect:
             Instant starts = Instant.now();
-            ProjectBuilder.builder().build()
+            Project project = ProjectBuilder.builder().withGradleUserHomeDir(new File('/tmp/gradle-test-home/')).build()
+            project.plugins.apply('java')
+            project.dependencies.add('compile', project.dependencies.gradleApi())
             println "ProjectBuilder built time: ${Duration.between(starts, Instant.now())}"
     }
 }
